@@ -42,7 +42,7 @@
               <div
                 style="display: flex; align-items: center; justify-content: space-around; width:300px"
               >
-                <div v-if="role === 'customer' || product.stock !== 0" style="display:flex; align-items: center">
+                <div v-if="role === 'customer' && product.stock !== 0" style="display:flex; align-items: center">
                   <p>Qty:</p>
                   <input
                     v-model="qty"
@@ -55,7 +55,7 @@
                 </div>
                 <br />
                 <a
-                  v-if="role === 'customer' || product.stock !== 0"
+                  v-if="role === 'customer' && product.stock !== 0"
                   @click="addToCart"
                   class="button is-warning"
                   style="width:100px"

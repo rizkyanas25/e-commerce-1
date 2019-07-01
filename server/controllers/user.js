@@ -1,8 +1,6 @@
 const User = require('../models/user')
 const {compare} = require('../helpers/bcrypt')
 const {sign} = require('../helpers/jwt')
-const {OAuth2Client} = require('google-auth-library')
-// const client = new OAuth2Client("446955434295-e4c0ioeh1pg6b5ened74fdhkjb7olujd.apps.googleusercontent.com")
 
 class UserController {
     
@@ -68,64 +66,6 @@ class UserController {
         .catch(next)
     }
 
-    // static loginGoogle(req,res,next){
-    //     client
-    //     .verifyIdToken({
-    //         idToken: req.body.idToken,
-    //         audience: "446955434295-e4c0ioeh1pg6b5ened74fdhkjb7olujd.apps.googleusercontent.com",
-    //     })
-
-    //     .then(function(ticket){
-    //       const { email, name, picture } = ticket.getPayload()
-
-    //       let password= name+'miniWP'
-    //       let newUser={
-    //           name: name,
-    //           email: email,
-    //           password: password
-    //       }
-
-    //       User.findOne({email: email})
-    //       .then(user=>{
-    //           if(user){
-    //               console.log(user)
-    //               let payload = {
-    //                   id : user._id,
-    //                   name: user.name,
-    //                   email : user.email
-    //               }
-
-    //               let token = sign(payload)
-    //               res.status(200).json({
-    //                   token,
-    //                   name : user.name,
-    //                   email : user.email,
-    //                   _id : user._id
-    //               })
-    //           }else{
-    //               User.create(newUser)
-    //               .then(user=>{
-    //                   let payload = {
-    //                       _id : user._id,
-    //                       name: user.name,
-    //                       email : user.email
-    //                   }
-
-    //                   let token = sign(payload)
-
-    //                   res.status(200).json({
-    //                       token,
-    //                       name : user.name,
-    //                       email : user.email
-    //                   })
-    //               })
-    //               .catch(next)  
-    //           }
-    //       })
-    //       .catch(next)
-    //   })
-    //   .catch(next)
-    // }
 }
 
 module.exports = UserController
