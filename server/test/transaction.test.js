@@ -87,7 +87,8 @@
 //   Product
 //     .create(newProduct1)
 //     .then(createdProduct => {
-//       console.log('created')
+//       console.log(createdProduct)
+//       console.log(product1)
 //       product1 = createdProduct
 //     })
 //     .catch(err => {
@@ -97,13 +98,14 @@
 //   Product
 //     .create(newProduct2)
 //     .then(createdProduct => {
-//       console.log('created')
+//       console.log(createdProduct)
+//       console.log(product2)
 //       product2 = createdProduct
 //     })
 //     .catch(err => {
 //       throw err
 //     })
-  
+
 //   let newCart1 = {
 //     productId: product1._id,
 //     qty: 2,
@@ -154,8 +156,26 @@
 // describe ('TRANSACTION TEST', function() {
 //   describe ('1. POST /transactions', function() {
 //     it('1.1. should return status code 201 with respond body created trans', function(done) {
+      
+//       let item1 = {
+//         name: product1.name,
+//         price: product1.price,
+//         image: product1.image,
+//         qty: cart1.qty
+//       }
+
+//       let item2 = {
+//         name: product2.name,
+//         price: product2.price,
+//         image: product2.image,
+//         qty: cart2.qty
+//       }
+
 //       let newTransaction = {
-//         items: [cart1, cart2]
+//         items: [item1, item2],
+//         totalPrice: 5000000,
+//         delivLocation: 'Hacktiv8',
+//         phoneNumber: '081234567890',
 //       }
 
 //       chai
@@ -170,6 +190,8 @@
 //           expect(res.body).to.have.property('_id')
 //           expect(res.body).to.have.property('items')
 //           expect(res.body).to.have.property('totalPrice')
+//           expect(res.body).to.have.property('delivLocation')
+//           expect(res.body).to.have.property('phoneNumber')
 //           expect(res.body).to.have.property('userId')
 //           expect(res.body).to.have.property('status')          
 

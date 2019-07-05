@@ -1,6 +1,16 @@
 const Transaction = require('../models/transaction')
 const Cart = require('../models/cart')
 
+const nodemailer = require('nodemailer')
+
+transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+         user: 'gundamku.indonesia@gmail.com',
+         pass: 'gundamku25!'
+     }
+ })
+
 class TransactionController {
   static findUserTransaction (req, res, next) {
     Transaction
@@ -78,14 +88,29 @@ class TransactionController {
   static updateStatusAdmin (req, res, next) {
     Transaction
       .findById(req.params.id)
+      .populate('userId')
       .then( trans => {
         let status = {
           status: ''
         }
         if (trans.status === 'verify') status.status = 'verified'
-        else if (trans.status === 'verified') status.status = 'sent'
+        else if (trans.status === 'verified') {status.status = 'sent'}
         else throw {code:401, msg: 'You cant update this status'}
         trans.set(status)
+        const mailOptions = {
+          from: 'gundamku.indonesia@gmail.com',
+          to: trans.userId.email,
+          subject: 'Gundamku Indonesia',
+          html: `<p>Your transaction and items has been ${status.status}</p>
+          <h4>Please check your transaction inside the app</h4>
+          <a href="gundamku.rizkyanas25.xyz">Go to Gundamku now!</a>`
+        };
+        transporter.sendMail(mailOptions, function (err, info) {
+            if(err)
+              console.log(err)
+            else
+              console.log(info);  
+        });
         return trans.save()
       })
       .then(updatedTrans => {

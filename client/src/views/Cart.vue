@@ -67,7 +67,12 @@ export default {
     createTransaction() {
       let regex = /^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$/g
       
-      if (this.phoneNumber === '' || this.delivLocation === '') {
+      if (this.carts.length === 0) {
+        this.$toast.open({
+          message: "Cart empty, can't make transaction",
+          type: 'is-danger'
+        })
+      } else if (this.phoneNumber === '' || this.delivLocation === '') {
         this.$toast.open({
           message: "Fill the form first",
           type: 'is-danger'

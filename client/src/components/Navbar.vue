@@ -6,9 +6,7 @@
         Gundamku
       </div>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-        <span></span>
-        <span></span>
-        <span></span>
+
       </div>
     </div>
     
@@ -30,7 +28,8 @@
         <div class="navbar-item has-dropdown is-hoverable" style="margin-right:20px">
           <div v-if="isLogin" class="navbar-item" style="cursor: default">
             <p style="margin-right:10px">Hello, {{name}}</p>
-            <i class="fas fa-shopping-cart"></i>
+            <i v-if="role !== 'admin'" class="fas fa-shopping-cart"></i>
+            <i v-if="role === 'admin'" class="fas fa-user-astronaut"></i>
             <i v-if="role=== 'customer' && carts.length !== 0" class="fas fa-exclamation animated infinite bounce" style="color:red; position:absolute; margin-left:200px; margin-top:-5px"></i>
           </div>
           <div class="navbar-dropdown is-boxed">
@@ -107,7 +106,7 @@
                     { 'Password is too short': passwordHasError },
                     { 'Password must have at least 8 characters': passwordHasError }
                   ]">
-                  <b-input v-model="newUser.password" type="password" placeholder=""></b-input>
+                  <b-input v-model="newUser.password" type="text" placeholder=""></b-input>
               </b-field>
                 
                 <a @click="register" class="button is-warning">
@@ -290,7 +289,9 @@ export default {
             })
             this.loginUser.email = ''
             this.loginUser.password = ''
+            this.$store.dispatch('fetchProducts')
             this.$store.dispatch('fetchCarts')
+            this.$store.dispatch('fetchUserTrancastions')
           })
           .catch(err => {
             console.log(err.response.data.msg)
@@ -360,6 +361,7 @@ export default {
         localStorage.removeItem('role')
         localStorage.removeItem('_id')
         this.$store.commit('isLoggedIn')
+        this.$store.commit('setTransactions', [])
         this.$router.push('/')
         this.$toast.open({
             message: `See u soon, ${this.$store.state.name}`

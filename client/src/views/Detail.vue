@@ -1,5 +1,5 @@
 <template>
-  <div v-if="check" class="animated slideInDown">
+  <div v-if="check" class="animated slideInDown fast">
     <div class="container is-fluid" style="margin-bottom:50px">
       <div class="notification">
         <div class="card">
@@ -42,7 +42,7 @@
               <div
                 style="display: flex; align-items: center; justify-content: space-around; width:300px"
               >
-                <div v-if="role === 'customer' && product.stock !== 0" style="display:flex; align-items: center">
+                <div v-if="role !== 'admin' && product.stock !== 0" style="display:flex; align-items: center">
                   <p>Qty:</p>
                   <input
                     v-model="qty"
@@ -55,12 +55,12 @@
                 </div>
                 <br />
                 <a
-                  v-if="role === 'customer' && product.stock !== 0"
+                  v-if="role !== 'admin' && product.stock !== 0"
                   @click="addToCart"
                   class="button is-warning"
                   style="width:100px"
                 >Add To Cart</a>
-                <p v-if="role === 'customer' && product.stock === 0"><strong>Stock Empty</strong></p>
+                <p v-if="role !== 'admin' && product.stock === 0"><strong>Stock Empty</strong></p>
                 <div
                   v-if="role === 'admin'"
                   style="display: flex; flex-direction: column; align-items: center; justify-content: space-around; height:200px"
